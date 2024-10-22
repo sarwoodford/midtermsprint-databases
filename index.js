@@ -2,10 +2,10 @@ const { Pool } = require('pg');
 
 // PostgreSQL connection
 const pool = new Pool({
-  user: 'postgres', //This _should_ be your username, as it's the default one Postgres uses
+  user: 'sara', //This _should_ be your username, as it's the default one Postgres uses
   host: 'localhost',
-  database: 'your_database_name', //This should be changed to reflect your actual database
-  password: 'your_database_password', //This should be changed to reflect the password you used when setting up Postgres
+  database: 'midtermsprint', //This should be changed to reflect your actual database
+  password: 'sara', //This should be changed to reflect the password you used when setting up Postgres
   port: 5432,
 });
 
@@ -14,6 +14,36 @@ const pool = new Pool({
  */
 async function createTable() {
   // TODO: Add code to create Movies, Customers, and Rentals tables
+  // create movies table
+  const createMoviesTable =   
+  `CREATE TABLE IF NOT EXISTS movies(
+    movie_id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    release_year INT NOT NULL,
+    genre VARCHAR(100) NOT NULL,
+    director_name VARCHAR(100) NOT NULL
+  );
+  `;
+
+  const createCustomersTable = 
+  `CREATE TABLE IF NOT EXISTS customers(
+    customer_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    phone_num VARCHAR(10) NOT NULL
+  );
+  `;
+
+  const createRentalsTable = 
+  `CREATE TABLE IF NOT EXISTS rentals(
+    rental_id SERIAL PRIMARY KEY,
+    customer_id INT REFERENCES customers(customer_id),
+    movie_id INT REFERENCES movies(movie_id),
+    rental_date DATE NOT NULL,
+    return_date DATE 
+  );
+  `;
 };
 
 /**

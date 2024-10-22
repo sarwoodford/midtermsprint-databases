@@ -1,0 +1,21 @@
+MOVIES TABLE
+
+    the movies table adheres to 3NF because it has a primary key (movie_id), which
+    is the only thing that each non primary-key attribute (title, release_year, genre, 
+    director_name) depends on. there are no attributes that are dependant on eachother 
+    (ex.. if you deleted the genre attribute, no others would be affected)
+
+CUSTOMERS TABLE
+
+    the customers table adheres to 3NF because there is a primary key (customer_id),
+    and non primary-key attributes (first_name, last_name, email, phone_num) that
+    depend on it and not eachother. (ex.. if email was deleted, phone_num would not
+    be affected, it is only dependant on the customer which is identified by 
+    customer_id)
+
+RENTALS TABLE 
+
+    the rentals table adheres to 3NF because there is a primary key (rental_id)
+    and non-primary key attributes (customer_id, movie_id, rental_date, return_date)
+    which are not dependant on eachother (ex.. if movie_id got deleted, rental_date
+    would not be affected) but are dependant on the primary key rental_id. 

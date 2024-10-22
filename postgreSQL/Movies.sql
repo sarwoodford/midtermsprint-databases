@@ -54,3 +54,43 @@ INSERT INTO rentals (customer_id, movie_id, rental_date, return_date) VALUES
 (3, 4, '2024-08-03', '2024-08-11'), 
 (4, 2, '2024-09-02', NULL), 
 (5, 3, '2024-10-01', NULL); 
+
+-- POSTGRESQL QUERIES
+-- FIND ALL MOVIES RENTED BY A SPECIFIC CUSTOMER, GIVEN THEIR EMAIL
+
+FROM rentals
+JOIN customers ON rentals.customer_id = customers.customer_id
+JOIN movies ON rentals.movie_id = movies.movie_id
+WHERE customers.email = 'jdoe@example.com';
+
+-- GIVEN A MOVIE TITLE, LIST ALL CUSTOMERS WHO HAVE RENTED THE MOVIE
+
+SELECT customers.first_name, customers.last_name
+FROM rentals
+JOIN customers ON rentals.customer_id = customers.customer_id
+JOIN movies ON rentals.movie_id = movies.movie_id
+WHERE movies.title = 'Shutter Island';
+
+-- GET THE RENTAL HISTORY FOR A SPECIFIC MOVIE TITLE
+
+SELECT customers.first_name, customers.last_name, rentals.rental_date, rentals.return_date
+FROM rentals
+JOIN customers ON rentals.customer_id = customers.customer_id
+JOIN movies ON rentals.movie_id = movies.movie_id
+WHERE movies.title = 'Jurrastic Park';
+
+-- FOR A SPECIFC MOVIE DIRECTOR, FIND THE NAME OF THE CUSTOMER, THE DATE THAT THE
+-- MOVIE WAS RENTED AND THE MOVIE TITLE, EACH TIME A MOVIE BY THAT DIRECTOR WAS RENTED
+
+SELECT customers.first_name, customers.last_name, rentals.rental_date, movies.title
+FROM rentals
+JOIN customers ON rentals.customer_id = customers.customer_id
+JOIN movies ON rentals.movie_id = movies.movie_id
+WHERE movies.director_name = 'Francis Ford Coppola'
+
+-- LIST ALL CURRENTLY RENTED OUT MOVIES (MOVIES THAT HAVE NOT BEEN RETURNED)
+
+SELECT movies.title
+FROM rentals
+JOIN movies ON rentals.movie_id = movies.movie_id
+WHERE rentals.return_date IS NULL;

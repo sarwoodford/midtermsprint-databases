@@ -56,7 +56,7 @@ async function createTable() {
  */
 async function insertMovie(title, release_year, genre, director_name) {
   // TODO: Add code to insert a new movie into the Movies table
-  const query = `INSERT INTO movies (title, year, genre, director) VALUES ($1, $2, $3, $4])`;
+  const query = 'INSERT INTO movies (title, year, genre, director) VALUES ($1, $2, $3, $4])';
   const result = await pool.query(query, [title, release_year, genre, director_name])
   console.log(`Added movie: ${result.rows[0].title}, ${result.rows[0].release_year}. ${result.rows[0].genre} 
               movie directed by ${result.rows[0].director_name}`);
@@ -67,7 +67,7 @@ async function insertMovie(title, release_year, genre, director_name) {
  */
 async function displayMovies() {
   // TODO: Add code to retrieve and print all movies from the Movies table
-  const result = await pool.query(`SELECT * FROM movies`);
+  const result = await pool.query('SELECT * FROM movies');
   console.log('Movies: ');
   result.rows.forEach(movie => {
     console.log(`${movie.id}: ${movie.title}, ${movie.year} - a ${movie.genre} by ${movie.director}`);
@@ -81,8 +81,11 @@ async function displayMovies() {
  * @param {number} customerId ID of the customer
  * @param {string} newEmail New email address of the customer
  */
-async function updateCustomerEmail(customerId, newEmail) {
+async function updateCustomerEmail(customerId, email, newEmail) {
   // TODO: Add code to update a customer's email address
+  const query = 'UPDATE movies SET ${email} = $1 WHERE id = $2 RETURNING *';
+  const result = await pool.query(query [newEmail, customerId]);
+  console.log(`updated customer ${customerId} email: ${email} changed to ${newEmail}`)
 };
 
 /**
@@ -92,6 +95,10 @@ async function updateCustomerEmail(customerId, newEmail) {
  */
 async function removeCustomer(customerId) {
   // TODO: Add code to remove a customer and their rental history
+  const query = 'DELETE FROM customers WHERE id = $1';
+  await pool.query(query [customerId]);
+  console.log(`Customer ${customerId} deleted.`)
+
 };
 
 /**

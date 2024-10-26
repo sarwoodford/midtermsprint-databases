@@ -49,7 +49,6 @@ async function createTable() {
   await pool.query(createMoviesTable);
   await pool.query(createCustomersTable);
   await pool.query(createRentalsTable);
-  console.log('Tables Successfully Created!');
 
 };
   

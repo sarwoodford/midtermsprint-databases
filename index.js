@@ -93,7 +93,7 @@ async function updateCustomerEmail(customer_id, newEmail) {
   const query = 'UPDATE customers SET email = $1 WHERE customer_id = $2 RETURNING *';
   
   try{
-    const result = await pool.query(query [newEmail, customer_id]);
+    const result = await pool.query(query, [newEmail, customer_id]);
     if(result.rowCount > 0){
       console.log(`changed customer ${customer_id} email to ${newEmail}`);
     }else{

@@ -64,7 +64,7 @@ async function createTable() {
  */
 async function insertMovie(title, release_year, genre, director_name) {
   // TODO: Add code to insert a new movie into the Movies table
-  const query = 'INSERT INTO movies (title, release_year, genre, director_name) VALUES ($1, $2, $3, $4])';
+  const query = 'INSERT INTO movies (title, release_year, genre, director_name) VALUES ($1, $2, $3, $4) RETURNING *';
   const result = await pool.query(query, [title, release_year, genre, director_name])
   console.log(`Added movie: ${result.rows[0].title}, ${result.rows[0].release_year}. ${result.rows[0].genre} 
               movie directed by ${result.rows[0].director_name}`);
@@ -89,11 +89,11 @@ async function displayMovies() {
  * @param {number} customerId ID of the customer
  * @param {string} newEmail New email address of the customer
  */
-async function updateCustomerEmail(customerId, email, newEmail) {
+async function updateCustomerEmail(customerId, newEmail) {
   // TODO: Add code to update a customer's email address
-  const query = 'UPDATE movies SET email = $1 WHERE id = $2 RETURNING *';
+  const query = 'UPDATE customers SET email = $1 WHERE customer_id = $2 RETURNING *';
   const result = await pool.query(query [newEmail, customerId]);
-  console.log(`updated customer ${customerId} email: ${email} changed to ${newEmail}`)
+  console.log(`changed customer ${customerId} email to ${newEmail}`)
 };
 
 /**
@@ -106,8 +106,8 @@ async function removeCustomer(customerId) {
   const removeRentalsQuery = 'DELETE FROM rentals WHERE customer_id = $1';
   const removeCustomerQuery = 'DELETE FROM customers WHERE customer_id = $1';
   
-  await pool.query(removeRentalsQuery [customerId]);
-  const result = await pool.query(removeCustomerQuery [customerId]);
+  await pool.query(removeRentalsQuery, [customerId]);
+  const result = await pool.query(removeCustomerQuery, [customerId]);
   console.log(`Customer ${customerId} and associated rentals deleted.`)
 
 };

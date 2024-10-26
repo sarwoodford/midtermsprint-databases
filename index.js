@@ -45,16 +45,14 @@ async function createTable() {
   );
   `;
 
-  try {
-    await pool.query(createMoviesTable);
-    await pool.query(createCustomersTable);
-    await pool.query(createRentalsTable);
-    console.log('Tables Successfully Created!');
+    
+  await pool.query(createMoviesTable);
+  await pool.query(createCustomersTable);
+  await pool.query(createRentalsTable);
+  console.log('Tables Successfully Created!');
 
-  } catch (err) {
-    console.log('An error occured creating tables. Please retry.', err);
-  }
 };
+  
 
 /**
  * Inserts a new movie into the Movies table.
@@ -80,7 +78,7 @@ async function displayMovies() {
   const result = await pool.query('SELECT * FROM movies');
   console.log('Movies: ');
   result.rows.forEach(movie => {
-    console.log(`${movie.id}: ${movie.title}, ${movie.year} - a ${movie.genre} by ${movie.director}`);
+    console.log(`${movie.movie_id}: ${movie.title}, ${movie.release_year} - a ${movie.genre} by ${movie.director_name}`);
   });
 
 };
@@ -93,7 +91,7 @@ async function displayMovies() {
  */
 async function updateCustomerEmail(customerId, email, newEmail) {
   // TODO: Add code to update a customer's email address
-  const query = 'UPDATE movies SET ${email} = $1 WHERE id = $2 RETURNING *';
+  const query = 'UPDATE movies SET email = $1 WHERE id = $2 RETURNING *';
   const result = await pool.query(query [newEmail, customerId]);
   console.log(`updated customer ${customerId} email: ${email} changed to ${newEmail}`)
 };
@@ -105,8 +103,8 @@ async function updateCustomerEmail(customerId, email, newEmail) {
  */
 async function removeCustomer(customerId) {
   // TODO: Add code to remove a customer and their rental history
-  const query = 'DELETE FROM customers WHERE id = $1';
-  await pool.query(query [customerId]);
+  const query = 'DELETE FROM customers WHERE customer_id = $1';
+  const result = await pool.query(query [customerId]);
   console.log(`Customer ${customerId} deleted.`)
 
 };

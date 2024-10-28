@@ -65,8 +65,7 @@ async function insertMovie(title, release_year, genre, director_name) {
   // TODO: Add code to insert a new movie into the Movies table
   const query = 'INSERT INTO movies (title, release_year, genre, director_name) VALUES ($1, $2, $3, $4) RETURNING *';
   const result = await pool.query(query, [title, release_year, genre, director_name])
-  console.log(`Added movie: ${result.rows[0].title}, ${result.rows[0].release_year}. ${result.rows[0].genre} 
-              movie directed by ${result.rows[0].director_name}`);
+  console.log(`Added movie: ${result.rows[0].title}, ${result.rows[0].release_year}. ${result.rows[0].genre} movie directed by ${result.rows[0].director_name}`);
 };
 
 /**
